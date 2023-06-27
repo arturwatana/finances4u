@@ -1,0 +1,5 @@
+@font-face {
+  font-family: "Enriqueta";
+  src: local("Enriqueta"),
+    url(./assets//fonts/Enriqueta-Medium.ttf) format("truetype");
+}
