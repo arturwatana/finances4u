@@ -7,7 +7,6 @@ import {
   InputGroup,
   InputRightElement,
   Text,
-  useStatStyles,
 } from "@chakra-ui/react";
 import { Form } from "./Login";
 import { Link } from "react-router-dom";

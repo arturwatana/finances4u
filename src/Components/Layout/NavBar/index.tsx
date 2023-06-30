@@ -1,4 +1,4 @@
-import { Box, Flex, chakra } from "@chakra-ui/react";
+import { Flex, chakra } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -51,7 +51,7 @@ const BurgerLi = chakra("li", {
 });
 
 export default function NavBar() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(true);
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [hoverMenu, setHoverMenu] = useState<boolean>(false);
   return (
     <Flex
@@ -72,7 +72,9 @@ export default function NavBar() {
           <li onClick={() => setHoverMenu((prev) => !prev)}>Minha conta</li>
         ) : (
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/login" onClick={() => setLoggedIn(true)}>
+              Login
+            </Link>
           </li>
         )}
       </Ul>
