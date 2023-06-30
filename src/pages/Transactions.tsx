@@ -43,11 +43,10 @@ export default function Transactions() {
     { name: "Mecanico", value: -1700, date: "18/08/2023" },
     { name: "Salario", value: 4700, date: "20/07/2023" },
     { name: "Mercado", value: -1700, date: "10/07/2023" },
-    { name: "Cartao de debito", value: -1700, date: "30/06/2023" },
-    { name: "Cartao de crédito", value: -1700, date: "17/05/2023" },
-    { name: "Conta de luz", value: -1700, date: "14/05/2023" },
-    { name: "Conta de telefone", value: -1700, date: "18/05/2023" },
-    { name: "Conta de telefone", value: 10000, date: "18/07/2023" },
+    { name: "Cartao de debito", value: -1500, date: "30/06/2023" },
+    { name: "Cartao de crédito", value: 11700, date: "17/05/2023" },
+    { name: "Conta de luz", value: -2600, date: "14/09/2023" },
+    { name: "Conta de telefone", value: -4900, date: "18/08/2023" },
   ];
 
   const futureTransactions = transactionsArray.filter((transaction) => {
@@ -57,6 +56,20 @@ export default function Transactions() {
       return transaction;
     }
   });
+
+  const futureValue = futureTransactions.reduce((prev, next) => {
+    return prev + next.value;
+  }, 0);
+
+  const transactionsValue = transactionsArray.reduce((prev, next) => {
+    const futureTransaction = futureTransactions.find(
+      (transaction) => transaction === next
+    );
+    if (!futureTransaction) {
+      return prev + next.value;
+    }
+    return prev;
+  }, 0);
 
   useEffect(() => {
     const filterTransactions = transactionsArray.filter(
@@ -78,20 +91,16 @@ export default function Transactions() {
         >
           <InfoBox>
             <Text fontWeight={"bold"}>Lancamentos futuros:</Text>
-            <Text>
+            <Text color={futureValue > 0 ? "#32A10B" : "#F60D0D"}>
               R$
-              {futureTransactions.reduce((prev, next) => {
-                return prev + next.value;
-              }, 0)}
+              {futureValue}
             </Text>
           </InfoBox>
           <InfoBox>
             <Text fontWeight={"bold"}> Saldo:</Text>
-            <Text>
+            <Text color={transactionsValue > 0 ? "#32A10B" : "#F60D0D"}>
               R$
-              {transactionsArray.reduce((prev, next) => {
-                return prev + next.value;
-              }, 0)}
+              {transactionsValue}
             </Text>
           </InfoBox>
         </Flex>

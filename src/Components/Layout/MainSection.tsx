@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Img, Text } from "@chakra-ui/react";
 import mainImg from "../../assets/undraw_personal_finance_re_ie6k (1).svg";
+import { Link } from "react-router-dom";
 
 export default function MainSection() {
   return (
@@ -26,7 +27,7 @@ export default function MainSection() {
             fontSize={"17px"}
             _hover={{ opacity: "0.7" }}
           >
-            Registre-se
+            <Link to="/register">Registre-se</Link>
           </Button>
           <Button w="9em" fontSize={"17px"}>
             Saiba mais
