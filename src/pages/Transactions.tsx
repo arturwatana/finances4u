@@ -12,19 +12,21 @@ import TransactionCard from "../Components/TransactionCard";
 import dayjs from "dayjs";
 import SortDates from "../utils/sortDates";
 import { useEffect, useState } from "react";
+import TransactionModal from "../Components/TransactionModal";
 
 const InfoBox = chakra("div", {
   baseStyle: {
     bg: "#B8EAB8",
     w: "45%",
     h: "100%",
+    p: "2em",
     borderRadius: "2em",
     display: "flex",
     gap: "1.5em",
     alignItems: "center",
     justifyContent: "center",
     flexDir: "column",
-    fontSize: "24px",
+    fontSize: "22px",
   },
 });
 
@@ -39,15 +41,8 @@ export default function Transactions() {
     TransactionProps[]
   >([]);
   const [filterDates, setFilterDates] = useState<string>("");
-  const transactionsArray: TransactionProps[] = [
-    { name: "Mecanico", value: -1700, date: "18/08/2023" },
-    { name: "Salario", value: 4700, date: "20/07/2023" },
-    { name: "Mercado", value: -1700, date: "10/07/2023" },
-    { name: "Cartao de debito", value: -1500, date: "30/06/2023" },
-    { name: "Cartao de crédito", value: 11700, date: "17/05/2023" },
-    { name: "Conta de luz", value: -2600, date: "14/09/2023" },
-    { name: "Conta de telefone", value: -4900, date: "18/08/2023" },
-  ];
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const transactionsArray: TransactionProps[] = [];
 
   const futureTransactions = transactionsArray.filter((transaction) => {
     const dateSplit = transaction.date.split("/");
@@ -82,6 +77,13 @@ export default function Transactions() {
 
   return (
     <Flex p="4em 40em 10em 40em" direction={"column"} gap="3em">
+      {modalOpen ? (
+        <TransactionModal
+          transactionsArray={transactionsArray}
+          setModalOpen={setModalOpen}
+        />
+      ) : null}
+
       <Flex direction={"column"} p="0 20em 0 20em" gap="2em">
         <Flex
           w="100%"
@@ -90,8 +92,10 @@ export default function Transactions() {
           h="25vh"
         >
           <InfoBox>
-            <Text fontWeight={"bold"}>Lancamentos futuros:</Text>
-            <Text color={futureValue > 0 ? "#32A10B" : "#F60D0D"}>
+            <Text fontWeight={"bold"} textAlign={"center"}>
+              Lancamentos futuros:
+            </Text>
+            <Text color={futureValue > 0 ? "#32A10B" : "#F60D0D"} h="50%">
               R$
               {futureValue}
             </Text>
@@ -106,7 +110,9 @@ export default function Transactions() {
         </Flex>
         <Flex direction={"column"} gap="2em" w="100%">
           <Flex w="100%" justifyContent={"space-between"} alignItems={"end"}>
-            <Button bg="primaryGreen">Criar Transacao</Button>
+            <Button bg="primaryGreen" onClick={() => setModalOpen(true)}>
+              Criar Transacao
+            </Button>
             <Flex>
               <InputGroup flexDir="column">
                 <FormLabel htmlFor="filterDate" textAlign={"center"}>
