@@ -11,11 +11,23 @@ export default function Home() {
       align="center"
       direction={"column"}
       justify={"space-evenly"}
-      gap="20em"
-      p="5em 40em 20em 40em"
+      gap={{ base: "10em", lg: "20em" }}
+      p={{
+        md: "5em 10em 15em 10em",
+        lg: "5em 15em 20em 15em",
+        xl: "5em 30em 20em 30em",
+        "2x1": "5em 40em 20em 40em",
+      }}
     >
       <MainSection />
-      <Flex w="100%" justify={"space-between"}>
+
+      <Flex
+        w="100%"
+        align="center"
+        justify={"space-between"}
+        direction={{ base: "column", lg: "row", xl: "row" }}
+        gap={{ base: "1em", md: "4em" }}
+      >
         <QualityCard
           img={facilityImg}
           text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
@@ -32,8 +44,13 @@ export default function Home() {
           text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
         />
       </Flex>
-      <Flex justify="space-between" align={"center"} gap="5em">
-        <Box w="50%">
+      <Flex
+        justify="space-between"
+        align={"center"}
+        gap="5em"
+        direction={{ base: "column", lg: "column", xl: "row" }}
+      >
+        <Box w={{ base: "80%", lg: "60%", xl: "50%" }}>
           <Img src={dashboardImg} />
         </Box>
         <Flex direction={"column"} textAlign={"center"} w="60%" gap="0.6em">

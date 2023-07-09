@@ -8,6 +8,14 @@ const theme = extendTheme({
     bg: "#F8FFF2",
     primaryGreen: "#9CFB7A",
   },
+  breakpoints: {
+    base: "740px",
+    sm: "768px",
+    md: "869px",
+    lg: "1080px",
+    xl: "1640px",
+    "2x1": "2070px",
+  },
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

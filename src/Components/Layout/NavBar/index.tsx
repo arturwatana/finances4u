@@ -1,6 +1,7 @@
 import { Flex, chakra } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Ul = chakra("ul", {
   baseStyle: {
@@ -57,42 +58,51 @@ export default function NavBar() {
     <Flex
       justify={"space-between"}
       align={"center"}
-      p="2.5em 40em 2.5em 40em"
-      position={"relative"}
+      p={{
+        md: "2.5em 15em 2.5em 15em",
+        lg: "2.5em 15em 2.5em 15em",
+        xl: "2.5em 30em 2.5em 30em",
+        "2x1": "2.5em 40em 2.5em 40em",
+      }}
     >
       <P>Finances4u</P>
-      <Ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/aboutus">Sobre nós</Link>
-        </li>
-        {loggedIn ? (
-          <li onClick={() => setHoverMenu((prev) => !prev)}>Minha conta</li>
-        ) : (
+      <Flex>
+        <Flex display={{ lg: "block", xl: "none" }} fontSize={"32px"}>
+          <RxHamburgerMenu />
+        </Flex>
+        <Ul display={{ base: "none", lg: "none", xl: "flex" }}>
           <li>
-            <Link to="/login" onClick={() => setLoggedIn(true)}>
-              Login
-            </Link>
+            <Link to="/">Home</Link>
           </li>
-        )}
-      </Ul>
-      {hoverMenu ? (
-        <BurgerUl>
-          <BurgerLi
-            borderBottom={"1px solid #79AC67"}
-            pb="1em"
-            w="100%"
-            textAlign={"center"}
-          >
-            <Link to="/transactions">Transacoes</Link>
-          </BurgerLi>
-          <BurgerLi>
-            <Link to="/account">Configuracoes</Link>
-          </BurgerLi>
-        </BurgerUl>
-      ) : null}
+          <li>
+            <Link to="/aboutus">Sobre nós</Link>
+          </li>
+          {loggedIn ? (
+            <li onClick={() => setHoverMenu((prev) => !prev)}>Minha conta</li>
+          ) : (
+            <li>
+              <Link to="/login" onClick={() => setLoggedIn(true)}>
+                Login
+              </Link>
+            </li>
+          )}
+        </Ul>
+        {hoverMenu ? (
+          <BurgerUl>
+            <BurgerLi
+              borderBottom={"1px solid #79AC67"}
+              pb="1em"
+              w="100%"
+              textAlign={"center"}
+            >
+              <Link to="/transactions">Transacoes</Link>
+            </BurgerLi>
+            <BurgerLi>
+              <Link to="/account">Configuracoes</Link>
+            </BurgerLi>
+          </BurgerUl>
+        ) : null}
+      </Flex>
     </Flex>
   );
 }

@@ -4,23 +4,41 @@ import { Link } from "react-router-dom";
 
 export default function MainSection() {
   return (
-    <Flex w="100%" h="100%" align={"center"} justify={"space-between"}>
+    <Flex
+      w="100%"
+      h="100%"
+      align="center"
+      justify="space-between"
+      direction={{ md: "column-reverse", lg: "column-reverse", xl: "row" }}
+    >
       <Flex
         direction="column"
-        w="60%"
+        w={{ lg: "100%", xl: "60%" }}
         justify={"space-evenly"}
         h="60%"
-        gap="2em"
+        gap={{ md: "3em", lg: "3em", xl: "2em" }}
       >
-        <Flex direction={"column"}>
-          <Text fontSize="60px" fontWeight="semibold" w="100%">
+        <Flex direction={"column"} gap={{ lg: "0.5em" }}>
+          <Text
+            fontSize={{ md: "45px", lg: "45px", "2x1": "60px" }}
+            fontWeight="semibold"
+            w="100%"
+            textAlign={{ md: "center", lg: "center", xl: "left" }}
+          >
             Chegou a hora de colocar sua vida em ordem!
           </Text>
-          <Text fontSize="30px" fontWeight="light">
+          <Text
+            fontSize={{ md: "27px", lg: "27px", "2x1": "30px" }}
+            fontWeight="light"
+            textAlign={{ md: "center", lg: "center", xl: "left" }}
+          >
             Anote e gerencie seus gastos em apenas um app!
           </Text>
         </Flex>
-        <Flex gap="2em">
+        <Flex
+          gap={{ md: "4em", xl: "2em" }}
+          justifyContent={{ md: "center", lg: "center", xl: "left" }}
+        >
           <Button
             bgColor="primaryGreen"
             w="9em"
@@ -35,7 +53,7 @@ export default function MainSection() {
         </Flex>
       </Flex>
       <Flex w="40%" justify="end" align={"start"}>
-        <Box w="60%" pb="2em">
+        <Box w={{ lg: "80%", xl: "60%" }} pb="2em">
           <Img src={mainImg} h="100%" w="100%" />
         </Box>
       </Flex>
