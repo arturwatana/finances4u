@@ -9,35 +9,35 @@ export default function MainSection() {
       h="100%"
       align="center"
       justify="space-between"
-      direction={{ md: "column-reverse", lg: "column-reverse", xl: "row" }}
+      direction={{ base: "column-reverse", lg: "column-reverse", xl: "row" }}
     >
       <Flex
         direction="column"
         w={{ lg: "100%", xl: "60%" }}
         justify={"space-evenly"}
         h="60%"
-        gap={{ md: "3em", lg: "3em", xl: "2em" }}
+        gap={{ base: "3em", lg: "3em", xl: "2em" }}
       >
         <Flex direction={"column"} gap={{ lg: "0.5em" }}>
           <Text
-            fontSize={{ md: "45px", lg: "45px", "2x1": "60px" }}
+            fontSize={{ base: "35px", lg: "45px", "2x1": "60px" }}
             fontWeight="semibold"
             w="100%"
-            textAlign={{ md: "center", lg: "center", xl: "left" }}
+            textAlign={{ base: "center", lg: "center", xl: "left" }}
           >
             Chegou a hora de colocar sua vida em ordem!
           </Text>
           <Text
-            fontSize={{ md: "27px", lg: "27px", "2x1": "30px" }}
+            fontSize={{ base: "27px", lg: "27px", "2x1": "30px" }}
             fontWeight="light"
-            textAlign={{ md: "center", lg: "center", xl: "left" }}
+            textAlign={{ base: "center", lg: "center", xl: "left" }}
           >
             Anote e gerencie seus gastos em apenas um app!
           </Text>
         </Flex>
         <Flex
-          gap={{ md: "4em", xl: "2em" }}
-          justifyContent={{ md: "center", lg: "center", xl: "left" }}
+          gap={{ base: "4em", xl: "2em" }}
+          justifyContent={{ base: "center", lg: "center", xl: "left" }}
         >
           <Button
             bgColor="primaryGreen"
@@ -52,8 +52,11 @@ export default function MainSection() {
           </Button>
         </Flex>
       </Flex>
-      <Flex w="40%" justify="end" align={"start"}>
-        <Box w={{ lg: "80%", xl: "60%" }} pb="2em">
+      <Flex
+        justify={{ base: "center", lg: "end" }}
+        align={{ base: "center", lg: "start" }}
+      >
+        <Box w={{ base: "80%", lg: "80%", xl: "60%" }} pb="2em">
           <Img src={mainImg} h="100%" w="100%" />
         </Box>
       </Flex>

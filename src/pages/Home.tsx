@@ -13,7 +13,7 @@ export default function Home() {
       justify={"space-evenly"}
       gap={{ base: "10em", lg: "20em" }}
       p={{
-        md: "5em 10em 15em 10em",
+        base: "0em 2em 15em 2em",
         lg: "5em 15em 20em 15em",
         xl: "5em 30em 20em 30em",
         "2x1": "5em 40em 20em 40em",
@@ -26,7 +26,7 @@ export default function Home() {
         align="center"
         justify={"space-between"}
         direction={{ base: "column", lg: "row", xl: "row" }}
-        gap={{ base: "1em", md: "4em" }}
+        gap={{ base: "3.5em", md: "4em" }}
       >
         <QualityCard
           img={facilityImg}
@@ -46,6 +46,7 @@ export default function Home() {
       </Flex>
       <Flex
         justify="space-between"
+        w={{ base: "70%", lg: "100%" }}
         align={"center"}
         gap="5em"
         direction={{ base: "column", lg: "column", xl: "row" }}
@@ -53,7 +54,12 @@ export default function Home() {
         <Box w={{ base: "80%", lg: "60%", xl: "50%" }}>
           <Img src={dashboardImg} />
         </Box>
-        <Flex direction={"column"} textAlign={"center"} w="60%" gap="0.6em">
+        <Flex
+          direction={"column"}
+          textAlign={"center"}
+          w={{ base: "100%", lg: "60%" }}
+          gap="0.6em"
+        >
           <Text fontSize={"23px"}>Tenha acesso ao Dashboard</Text>
           <Text fontWeight={"lighter"} fontSize={"20px"}>
             Lorem Ipsum is simply dummy text of the printing and typesetting

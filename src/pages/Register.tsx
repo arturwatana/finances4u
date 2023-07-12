@@ -16,16 +16,25 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <Flex align="center" justify="center" p="4em 40em 3em 40em">
+    <Flex
+      align="center"
+      justify="center"
+      p={{
+        base: "5em 2em 15em 2em",
+        lg: "5em 15em 20em 15em",
+        xl: "5em 30em 20em 30em",
+        "2x1": "5em 40em 20em 40em",
+      }}
+    >
       <Form
-        w="35%"
+        w={{ lg: "55%", xl: "55%", "2x1": "55%" }}
         bgColor="#c3e9c3"
         display={"flex"}
         flexDirection={"column"}
         gap="2em"
         alignItems={"center"}
         justifyContent={"center"}
-        p="3em 5em 3em 5em"
+        p={{ base: "3em", lg: "3em 5em 3em 5em" }}
         borderRadius={"2em"}
         boxShadow={"0.1em 0.3em 0.5em #222"}
       >
@@ -116,12 +125,18 @@ export default function Register() {
             </InputRightElement>
           </InputGroup>
         </FormControl>
-        <Flex alignItems={"flex"} justifyContent={"space-between"} w="100%">
+        <Flex
+          alignItems={"flex"}
+          justifyContent={"space-between"}
+          w="100%"
+          gap={{ base: "2em", lg: "0em" }}
+          flexDir={{ base: "column", lg: "row" }}
+        >
           <Button
+            w={{ base: "100%", lg: "40%" }}
             bg="primaryGreen"
             borderRadius={"2em"}
             _hover={{ opacity: "0.7" }}
-            w="40%"
           >
             Registrar
           </Button>

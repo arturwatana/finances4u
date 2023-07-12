@@ -15,7 +15,7 @@ export default function TransactionCard({
     <Flex
       justifyContent={"space-between"}
       w="100%"
-      p="1em 6em 1em 6em"
+      p={{ base: "1em 2em 1em 2em", lg: "1em 6em 1em 6em" }}
       borderRadius={"2em"}
       bg="#B8EAB8"
     >

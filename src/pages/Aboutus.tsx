@@ -3,7 +3,17 @@ import sectionImg from "../assets/undraw_save_to_bookmarks_re_8ajf (1).svg";
 
 export default function Aboutus() {
   return (
-    <Flex p="4em 40em 3em 40em" w="100%">
+    <Flex
+      p={{
+        base: "3em 2em 0em 2em",
+        lg: "5em 15em 0em 15em",
+        xl: "5em 30em 0em 30em",
+        "2x1": "5em 40em 0em 40em",
+      }}
+      alignItems={"center"}
+      justifyContent={"center"}
+      w="100%"
+    >
       <Flex
         gap="3em"
         justifyContent={"space-between"}

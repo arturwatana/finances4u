@@ -9,7 +9,7 @@ const theme = extendTheme({
     primaryGreen: "#9CFB7A",
   },
   breakpoints: {
-    base: "740px",
+    base: "360px",
     sm: "768px",
     md: "869px",
     lg: "1080px",

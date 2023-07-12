@@ -42,7 +42,15 @@ export default function Transactions() {
   >([]);
   const [filterDates, setFilterDates] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const transactionsArray: TransactionProps[] = [];
+  const transactionsArray: TransactionProps[] = [
+    { name: "Teste", date: "17/07/2023", value: 5000 },
+    { name: "Teste", date: "17/07/2023", value: 5000 },
+    { name: "Teste", date: "17/07/2023", value: 5000 },
+    { name: "Teste", date: "17/07/2023", value: 5000 },
+    { name: "Teste", date: "17/07/2023", value: 5000 },
+    { name: "Teste", date: "17/07/2023", value: 5000 },
+    { name: "Teste", date: "17/07/2023", value: 5000 },
+  ];
 
   const futureTransactions = transactionsArray.filter((transaction) => {
     const dateSplit = transaction.date.split("/");
@@ -76,7 +84,16 @@ export default function Transactions() {
   const daysWithTransactions: any[] = SortDates(transactionsArray);
 
   return (
-    <Flex p="4em 40em 10em 40em" direction={"column"} gap="3em">
+    <Flex
+      p={{
+        base: "3em 2em 5em 2em",
+        lg: "5em 15em 5em 15em",
+        xl: "5em 30em 5em 30em",
+        "2x1": "5em 40em 5em 40em",
+      }}
+      direction={"column"}
+      gap="3em"
+    >
       {modalOpen ? (
         <TransactionModal
           transactionsArray={transactionsArray}
@@ -84,7 +101,7 @@ export default function Transactions() {
         />
       ) : null}
 
-      <Flex direction={"column"} p="0 20em 0 20em" gap="2em">
+      <Flex direction={"column"} gap="2em">
         <Flex
           w="100%"
           alignItems={"center"}
@@ -109,7 +126,13 @@ export default function Transactions() {
           </InfoBox>
         </Flex>
         <Flex direction={"column"} gap="2em" w="100%">
-          <Flex w="100%" justifyContent={"space-between"} alignItems={"end"}>
+          <Flex
+            w="100%"
+            justifyContent={"space-between"}
+            flexDir={{ base: "column", lg: "row" }}
+            alignItems={{ base: " center", lg: "end" }}
+            gap={{ base: "2em", lg: "0em" }}
+          >
             <Button bg="primaryGreen" onClick={() => setModalOpen(true)}>
               Criar Transacao
             </Button>

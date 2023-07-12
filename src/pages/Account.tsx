@@ -10,7 +10,12 @@ import {
 export default function Account() {
   return (
     <Flex
-      p="6em 40em 3em 40em"
+      p={{
+        base: "3em 2em 0em 2em",
+        lg: "5em 15em 0em 15em",
+        xl: "5em 30em 0em 30em",
+        "2x1": "5em 40em 0em 40em",
+      }}
       w="100%"
       alignItems={"center"}
       justify={"center"}
@@ -19,7 +24,7 @@ export default function Account() {
         direction={"column"}
         border="1px solid #222"
         borderRadius={"3em"}
-        w="50%"
+        w={{ base: "100%", lg: "50%" }}
         p="3em"
         gap="2em"
       >
@@ -29,10 +34,15 @@ export default function Account() {
         <Flex direction={"column"} gap="1em">
           <InputGroup
             display="flex"
+            flexDir={{ base: "column", lg: "row" }}
             alignItems={"center"}
             justifyContent={"center"}
           >
-            <FormLabel htmlFor="name" w="40%">
+            <FormLabel
+              htmlFor="name"
+              textAlign={{ base: "center", lg: "left" }}
+              w={{ base: "100%", lg: "40%" }}
+            >
               Nome Completo:
             </FormLabel>
             <Input type="text" />
@@ -41,18 +51,28 @@ export default function Account() {
             display="flex"
             alignItems={"center"}
             justifyContent={"center"}
+            flexDir={{ base: "column", lg: "row" }}
           >
-            <FormLabel htmlFor="email" w="40%">
+            <FormLabel
+              htmlFor="email"
+              textAlign={{ base: "center", lg: "left" }}
+              w={{ base: "100%", lg: "40%" }}
+            >
               Email:
             </FormLabel>
-            <Input type="text" />
+            <Input type="text" w="100%" />
           </InputGroup>
           <InputGroup
             display="flex"
             alignItems={"center"}
+            flexDir={{ base: "column", lg: "row" }}
             justifyContent={"center"}
           >
-            <FormLabel htmlFor="password" w="40%">
+            <FormLabel
+              htmlFor="password"
+              textAlign={{ base: "center", lg: "left" }}
+              w={{ base: "100%", lg: "40%" }}
+            >
               Nova senha:
             </FormLabel>
             <Input type="password" />

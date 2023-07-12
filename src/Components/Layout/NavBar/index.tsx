@@ -28,11 +28,12 @@ const BurgerUl = chakra("ul", {
     gap: "1em",
     p: "1em 0 1em 0",
     position: "absolute",
-    right: "24.2%",
-    top: "70%",
     display: "flex",
+    top: "80%",
+    right: "0%",
     flexDirection: "column",
     alignItems: "center",
+    bgColor: "bg",
     border: "1px solid #79AC67",
     borderRadius: "2em",
     w: "10em",
@@ -59,16 +60,19 @@ export default function NavBar() {
       justify={"space-between"}
       align={"center"}
       p={{
-        md: "2.5em 15em 2.5em 15em",
+        base: "1.5em 2em 1.5em 2em",
         lg: "2.5em 15em 2.5em 15em",
         xl: "2.5em 30em 2.5em 30em",
         "2x1": "2.5em 40em 2.5em 40em",
       }}
+      position={"relative"}
     >
-      <P>Finances4u</P>
+      <Link to="/">
+        <P>Finances4u</P>
+      </Link>
       <Flex>
         <Flex display={{ lg: "block", xl: "none" }} fontSize={"32px"}>
-          <RxHamburgerMenu />
+          <RxHamburgerMenu onClick={() => setHoverMenu((prev) => !prev)} />
         </Flex>
         <Ul display={{ base: "none", lg: "none", xl: "flex" }}>
           <li>
@@ -88,7 +92,7 @@ export default function NavBar() {
           )}
         </Ul>
         {hoverMenu ? (
-          <BurgerUl>
+          <BurgerUl right={{ base: "0%", lg: "15%" }}>
             <BurgerLi
               borderBottom={"1px solid #79AC67"}
               pb="1em"
