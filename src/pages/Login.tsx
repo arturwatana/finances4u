@@ -9,13 +9,59 @@ import {
   Text,
   chakra,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, redirect } from "react-router-dom";
+import axios from "axios";
+import { ContentContext } from "../App";
 
 export const Form = chakra("form", {});
 
+type LoginProps = {
+  email: string;
+  password: string;
+};
+
 export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loginInfo, setLoginInfo] = useState<LoginProps>({
+    email: "",
+    password: "",
+  });
+
+  const { setIsLoggedIn } = useContext(ContentContext);
+
+  function handleInputs(e: any) {
+    switch (e.target.id) {
+      case "email":
+        setLoginInfo({
+          ...loginInfo,
+          email: e.target.value,
+        });
+        break;
+
+      case "password":
+        setLoginInfo({
+          ...loginInfo,
+          password: e.target.value,
+        });
+    }
+  }
+
+  async function sendLogin() {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/login",
+        loginInfo
+      );
+      const token = response.data.access_token;
+      localStorage.setItem("token", token);
+      setIsLoggedIn(true);
+      return redirect("/transactions");
+    } catch (err: any) {
+      console.log(err.response.status);
+    }
+  }
+
   return (
     <Flex
       align="center"
@@ -65,6 +111,8 @@ export default function Login() {
             type="email"
             border="1px solid #222"
             borderRadius={"2em"}
+            id="email"
+            onChange={handleInputs}
             _hover={{ border: "1px solid white" }}
           />
         </FormControl>
@@ -91,6 +139,8 @@ export default function Login() {
               borderRadius={"2em"}
               _hover={{ border: "1px solid white" }}
               type={showPassword ? "text" : "password"}
+              id="password"
+              onChange={handleInputs}
               pr="4em"
             />
             <InputRightElement>
@@ -118,6 +168,7 @@ export default function Login() {
             borderRadius={"2em"}
             _hover={{ opacity: "0.7" }}
             w={{ base: "100%", lg: "40%" }}
+            onClick={sendLogin}
           >
             Logar
           </Button>

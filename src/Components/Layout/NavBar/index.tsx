@@ -1,7 +1,8 @@
 import { Flex, chakra } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { ContentContext } from "../../../App";
 
 const Ul = chakra("ul", {
   baseStyle: {
@@ -53,8 +54,9 @@ const BurgerLi = chakra("li", {
 });
 
 export default function NavBar() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [hoverMenu, setHoverMenu] = useState<boolean>(false);
+
+  const { isLoggedIn } = useContext(ContentContext);
   return (
     <Flex
       justify={"space-between"}
@@ -81,29 +83,45 @@ export default function NavBar() {
           <li>
             <Link to="/aboutus">Sobre nós</Link>
           </li>
-          {loggedIn ? (
+          {isLoggedIn ? (
             <li onClick={() => setHoverMenu((prev) => !prev)}>Minha conta</li>
           ) : (
             <li>
-              <Link to="/login" onClick={() => setLoggedIn(true)}>
-                Login
-              </Link>
+              <Link to="/login">Login</Link>
             </li>
           )}
         </Ul>
         {hoverMenu ? (
           <BurgerUl right={{ base: "0%", lg: "15%" }}>
-            <BurgerLi
-              borderBottom={"1px solid #79AC67"}
-              pb="1em"
-              w="100%"
-              textAlign={"center"}
-            >
-              <Link to="/transactions">Transacoes</Link>
-            </BurgerLi>
-            <BurgerLi>
-              <Link to="/account">Configuracoes</Link>
-            </BurgerLi>
+            {!isLoggedIn ? (
+              <>
+                <BurgerLi
+                  borderBottom={"1px solid #79AC67"}
+                  pb="1em"
+                  w="100%"
+                  textAlign={"center"}
+                >
+                  <Link to="/login">Login</Link>
+                </BurgerLi>
+                <BurgerLi>
+                  <Link to="/register">Registre-se</Link>
+                </BurgerLi>
+              </>
+            ) : (
+              <>
+                <BurgerLi
+                  borderBottom={"1px solid #79AC67"}
+                  pb="1em"
+                  w="100%"
+                  textAlign={"center"}
+                >
+                  <Link to="/transactions">Transacoes</Link>
+                </BurgerLi>
+                <BurgerLi>
+                  <Link to="/account">Configuracoes</Link>
+                </BurgerLi>
+              </>
+            )}
           </BurgerUl>
         ) : null}
       </Flex>

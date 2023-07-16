@@ -8,25 +8,31 @@ import {
 } from "@chakra-ui/react";
 import { TransactionProps } from "../pages/Transactions";
 import { useState } from "react";
+import axios from "axios";
 
 type ModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  transactionsArray: TransactionProps[];
 };
 
-export default function TransactionModal({
-  setModalOpen,
-  transactionsArray,
-}: ModalProps) {
+export default function TransactionModal({ setModalOpen }: ModalProps) {
   const [transaction, setTransaction] = useState<TransactionProps>({
     name: "",
-    date: "",
+    transactionDate: "",
     value: 0,
   });
 
-  function saveTransaction() {
-    console.log(transactionsArray);
-    setModalOpen(false);
+  async function saveTransaction() {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.post("http://localhost:3000/transactions", transaction, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setModalOpen(false);
+    } catch (err: any) {
+      console.log(err);
+    }
   }
   return (
     <Flex
@@ -88,7 +94,10 @@ export default function TransactionModal({
               <Input
                 type="date"
                 onChange={(e) =>
-                  setTransaction({ ...transaction, date: e.target.value })
+                  setTransaction({
+                    ...transaction,
+                    transactionDate: e.target.value,
+                  })
                 }
               />
             </FormControl>

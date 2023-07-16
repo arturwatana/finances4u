@@ -1,15 +1,10 @@
 import { Flex, Text } from "@chakra-ui/react";
-
-type TransactionProps = {
-  name: string;
-  value: number;
-  date?: string;
-};
+import { TransactionProps } from "../pages/Transactions";
 
 export default function TransactionCard({
   name,
+  transactionDate,
   value,
-  date,
 }: TransactionProps) {
   return (
     <Flex
@@ -27,7 +22,7 @@ export default function TransactionCard({
       >
         {name}
       </Text>
-      {date ? <Text>{date}</Text> : null}
+      {transactionDate ? <Text>{transactionDate}</Text> : null}
       <Text
         fontWeight={"semibold"}
         color={value > 0 ? "#32A10B" : "#F60D0D"}

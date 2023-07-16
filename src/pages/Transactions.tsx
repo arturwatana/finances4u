@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import SortDates from "../utils/sortDates";
 import { useEffect, useState } from "react";
 import TransactionModal from "../Components/TransactionModal";
+import axios from "axios";
 
 const InfoBox = chakra("div", {
   baseStyle: {
@@ -33,7 +34,9 @@ const InfoBox = chakra("div", {
 export type TransactionProps = {
   name: string;
   value: number;
-  date: string;
+  transactionDate: string;
+  id?: string;
+  userId?: string;
 };
 
 export default function Transactions() {
@@ -42,23 +45,44 @@ export default function Transactions() {
   >([]);
   const [filterDates, setFilterDates] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const transactionsArray: TransactionProps[] = [
-    { name: "Teste", date: "17/07/2023", value: 5000 },
-    { name: "Teste", date: "17/07/2023", value: 5000 },
-    { name: "Teste", date: "17/07/2023", value: 5000 },
-    { name: "Teste", date: "17/07/2023", value: 5000 },
-    { name: "Teste", date: "17/07/2023", value: 5000 },
-    { name: "Teste", date: "17/07/2023", value: 5000 },
-    { name: "Teste", date: "17/07/2023", value: 5000 },
-  ];
+  const [transactionsArray, setTransactionsArray] = useState<
+    TransactionProps[]
+  >([]);
 
-  const futureTransactions = transactionsArray.filter((transaction) => {
-    const dateSplit = transaction.date.split("/");
-    const newDate = new Date(+dateSplit[2], +dateSplit[1] - 1, +dateSplit[0]);
-    if (dayjs(newDate).isAfter(dayjs(new Date()))) {
-      return transaction;
+  async function getTransactions() {
+    const token = localStorage.getItem("token");
+    try {
+      const transactions = await axios.get(
+        "http://localhost:3000/transactions",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTransactionsArray(transactions.data);
+    } catch (err: any) {
+      console.log(err);
     }
-  });
+  }
+
+  useEffect(() => {
+    console.log(transactionsArray);
+  }, [transactionsArray]);
+
+  useEffect(() => {
+    getTransactions();
+  }, []);
+
+  const futureTransactions = transactionsArray.filter(
+    (transaction: TransactionProps) => {
+      const dateSplit = transaction.transactionDate.split("/");
+      const newDate = new Date(+dateSplit[2], +dateSplit[1] - 1, +dateSplit[0]);
+      if (dayjs(newDate).isAfter(dayjs(new Date()))) {
+        return transaction;
+      }
+    }
+  );
 
   const futureValue = futureTransactions.reduce((prev, next) => {
     return prev + next.value;
@@ -76,7 +100,7 @@ export default function Transactions() {
 
   useEffect(() => {
     const filterTransactions = transactionsArray.filter(
-      (transaction) => transaction.date === filterDates
+      (transaction) => transaction.transactionDate === filterDates
     );
     setFilteredTransactions(filterTransactions);
   }, [filterDates]);
@@ -94,12 +118,7 @@ export default function Transactions() {
       direction={"column"}
       gap="3em"
     >
-      {modalOpen ? (
-        <TransactionModal
-          transactionsArray={transactionsArray}
-          setModalOpen={setModalOpen}
-        />
-      ) : null}
+      {modalOpen ? <TransactionModal setModalOpen={setModalOpen} /> : null}
 
       <Flex direction={"column"} gap="2em">
         <Flex
@@ -173,12 +192,12 @@ export default function Transactions() {
                 <Text fontSize={"18px"} fontWeight={"semibold"}>
                   {filterDates}
                 </Text>
-                {filteredTransactions.map((transaction) => {
+                {filteredTransactions.map((transaction: TransactionProps) => {
                   return (
                     <TransactionCard
                       name={transaction.name}
                       value={transaction.value}
-                      date={transaction.date}
+                      transactionDate={transaction.transactionDate}
                     />
                   );
                 })}
@@ -188,12 +207,12 @@ export default function Transactions() {
                 <Text fontSize={"18px"} fontWeight={"semibold"}>
                   Futuras transacoes
                 </Text>
-                {futureTransactions.map((transaction) => {
+                {futureTransactions.map((transaction: TransactionProps) => {
                   return (
                     <TransactionCard
                       name={transaction.name}
                       value={transaction.value}
-                      date={transaction.date}
+                      transactionDate={transaction.transactionDate}
                     />
                   );
                 })}
@@ -206,21 +225,28 @@ export default function Transactions() {
                         : day.format("DD/MM/YYYY")}
                     </Text>
                     <Flex direction={"column"} gap="2em">
-                      {transactionsArray.map((transaction) => {
-                        const futureTransaction = futureTransactions.find(
-                          (futureTransact) => futureTransact === transaction
-                        );
-                        if (!futureTransaction) {
-                          if (transaction.date === day.format("DD/MM/YYYY")) {
-                            return (
-                              <TransactionCard
-                                name={transaction.name}
-                                value={transaction.value}
-                              />
-                            );
+                      {transactionsArray.map(
+                        (transaction: TransactionProps) => {
+                          const futureTransaction = futureTransactions.find(
+                            (futureTransact: TransactionProps) =>
+                              futureTransact === transaction
+                          );
+                          if (!futureTransaction) {
+                            if (
+                              transaction.transactionDate ===
+                              day.format("DD/MM/YYYY")
+                            ) {
+                              return (
+                                <TransactionCard
+                                  name={transaction.name}
+                                  value={transaction.value}
+                                  transactionDate={transaction.transactionDate}
+                                />
+                              );
+                            }
                           }
                         }
-                      })}
+                      )}
                     </Flex>
                   </Flex>
                 ))}

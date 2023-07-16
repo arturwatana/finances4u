@@ -11,9 +11,56 @@ import {
 import { Form } from "./Login";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+
+type UserProps = {
+  name: string;
+  email: string;
+  password: string;
+};
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useState<UserProps>({
+    email: "",
+    name: "",
+    password: "",
+  });
+
+  function handleInputs(e: any) {
+    switch (e.target.id) {
+      case "name":
+        setUserInfo({
+          ...userInfo,
+          name: e.target.value,
+        });
+        break;
+
+      case "email":
+        setUserInfo({
+          ...userInfo,
+          email: e.target.value,
+        });
+        break;
+
+      case "password":
+        setUserInfo({
+          ...userInfo,
+          password: e.target.value,
+        });
+    }
+  }
+
+  async function sendRegister() {
+    try {
+      await axios.post("http://localhost:3000/users", userInfo);
+    } catch (err: any) {
+      if (err.response.data.message === "User already exists") {
+        console.log("user already exists");
+      }
+      console.log(err);
+    }
+  }
 
   return (
     <Flex
@@ -64,7 +111,9 @@ export default function Register() {
             type="text"
             border="1px solid #222"
             borderRadius={"2em"}
+            id="name"
             _hover={{ border: "1px solid white" }}
+            onChange={handleInputs}
           />
         </FormControl>
         <FormControl
@@ -81,10 +130,12 @@ export default function Register() {
             E-mail
           </FormLabel>
           <Input
+            id="email"
             type="email"
             border="1px solid #222"
             borderRadius={"2em"}
             _hover={{ border: "1px solid white" }}
+            onChange={handleInputs}
           />
         </FormControl>
         <FormControl
@@ -108,9 +159,11 @@ export default function Register() {
             <Input
               border="1px solid #222"
               borderRadius={"2em"}
+              id="password"
               _hover={{ border: "1px solid white" }}
               type={showPassword ? "text" : "password"}
               pr="4em"
+              onChange={handleInputs}
             />
             <InputRightElement>
               <Button
@@ -137,10 +190,11 @@ export default function Register() {
             bg="primaryGreen"
             borderRadius={"2em"}
             _hover={{ opacity: "0.7" }}
+            onClick={sendRegister}
           >
             Registrar
           </Button>
-          <Button borderRadius={"2em"} fontSize={"14px"} p="1em">
+          <Button borderRadius={"2em"} fontSize={"14px"} p="1em" type="reset">
             Limpar campos
           </Button>
         </Flex>
