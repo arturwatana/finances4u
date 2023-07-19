@@ -74,7 +74,7 @@ export default function Transactions() {
   const futureTransactions = transactionsArray.filter(
     (transaction: TransactionProps) => {
       const dateSplit = transaction.transactionDate.split("-");
-      const newDate = new Date(+dateSplit[0], +dateSplit[1] - 1, +dateSplit[2]);
+      const newDate = new Date(+dateSplit[2], +dateSplit[1] - 1, +dateSplit[0]);
       if (dayjs(newDate).isAfter(dayjs(new Date()))) {
         return transaction;
       }
@@ -167,7 +167,7 @@ export default function Transactions() {
                   type="date"
                   onChange={(e: any) => {
                     const dateSplit = e.target.value.split("-");
-                    const dateFormat = `${dateSplit[0]}-${dateSplit[1]}-${dateSplit[2]}`;
+                    const dateFormat = `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
                     setFilterDates(dateFormat);
                   }}
                   value={filterDates}
@@ -236,7 +236,7 @@ export default function Transactions() {
                           if (!futureTransaction) {
                             if (
                               transaction.transactionDate ===
-                              day.format("YYYY-MM-DD")
+                              day.format("DD-MM-YYYY")
                             ) {
                               return (
                                 <TransactionCard

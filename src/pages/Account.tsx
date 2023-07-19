@@ -6,6 +6,7 @@ import {
   InputGroup,
   Text,
 } from "@chakra-ui/react";
+import axios from "axios";
 
 import { useState } from "react";
 
@@ -21,6 +22,18 @@ export default function Account() {
     name: "",
     password: "",
   });
+
+  async function updateUserInDB() {
+    const token = localStorage.getItem("token");
+    const response = await axios.put("http://localhost:3000/users", user, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(response);
+  }
+
   return (
     <Flex
       p={{
@@ -107,7 +120,13 @@ export default function Account() {
             alignItems={"center"}
             pt="1em"
           >
-            <Button w="45%" h="2em" borderRadius={"2em"} bg="primaryGreen">
+            <Button
+              w="45%"
+              h="2em"
+              borderRadius={"2em"}
+              bg="primaryGreen"
+              onClick={updateUserInDB}
+            >
               Salvar
             </Button>
             <Button w="45%" h="2em" borderRadius={"2em"}>

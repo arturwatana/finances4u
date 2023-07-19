@@ -7,7 +7,7 @@ export default function SortDates(data: TransactionProps[]) {
   data.map((transaction) => {
     const dateSplit = transaction.transactionDate.split("-");
     if (dateSplit.length > 0) {
-      const newDate = new Date(+dateSplit[0], +dateSplit[1] - 1, +dateSplit[2]);
+      const newDate = new Date(+dateSplit[2], +dateSplit[1] - 1, +dateSplit[0]);
       const day = dayjs(newDate);
       if (day.isBefore(dayjs(new Date()))) {
         const dayAlreadyInTransactionsArray = daysWithTransactions.find(
