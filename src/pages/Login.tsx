@@ -58,7 +58,7 @@ export default function Login() {
       setIsLoggedIn(true);
       return redirect("/transactions");
     } catch (err: any) {
-      console.log(err.response.status);
+      console.log(err);
     }
   }
 
@@ -182,9 +182,10 @@ export default function Login() {
           gap="0.3em"
           alignItems={"center"}
           justifyContent={"center"}
+          fontSize={18}
         >
           <Text>Ainda não tem cadastro? </Text>
-          <Text _hover={{ color: "white", transition: "0.1s" }}>
+          <Text fontSize={18} _hover={{ color: "white", transition: "0.1s" }}>
             <Link to="/register">Registre-se</Link>
           </Text>
         </Flex>

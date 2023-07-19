@@ -205,8 +205,8 @@ export default function Register() {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <Text>Já tem cadastro? Faca o </Text>
-          <Text _hover={{ color: "white", transition: "0.1s" }}>
+          <Text fontSize={18}>Já tem cadastro? Faca o </Text>
+          <Text fontSize={18} _hover={{ color: "white", transition: "0.1s" }}>
             <Link to="/login">Login</Link>
           </Text>
         </Flex>

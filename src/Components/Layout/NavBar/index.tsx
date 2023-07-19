@@ -92,7 +92,7 @@ export default function NavBar() {
           )}
         </Ul>
         {hoverMenu ? (
-          <BurgerUl right={{ base: "0%", lg: "15%" }}>
+          <BurgerUl right={{ base: "0%", lg: "15%", xl: "25%" }}>
             {!isLoggedIn ? (
               <>
                 <BurgerLi

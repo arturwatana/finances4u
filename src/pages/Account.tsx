@@ -7,7 +7,20 @@ import {
   Text,
 } from "@chakra-ui/react";
 
+import { useState } from "react";
+
+type UserProps = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export default function Account() {
+  const [user, setUser] = useState<UserProps>({
+    email: "",
+    name: "",
+    password: "",
+  });
   return (
     <Flex
       p={{
@@ -45,7 +58,10 @@ export default function Account() {
             >
               Nome Completo:
             </FormLabel>
-            <Input type="text" />
+            <Input
+              type="text"
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
+            />
           </InputGroup>
           <InputGroup
             display="flex"
@@ -60,7 +76,11 @@ export default function Account() {
             >
               Email:
             </FormLabel>
-            <Input type="text" w="100%" />
+            <Input
+              type="text"
+              w="100%"
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+            />
           </InputGroup>
           <InputGroup
             display="flex"
@@ -75,7 +95,10 @@ export default function Account() {
             >
               Nova senha:
             </FormLabel>
-            <Input type="password" />
+            <Input
+              type="password"
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+            />
           </InputGroup>
           <Flex
             w="100%"

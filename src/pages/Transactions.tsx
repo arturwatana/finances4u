@@ -61,14 +61,11 @@ export default function Transactions() {
         }
       );
       setTransactionsArray(transactions.data);
+      return transactions.data;
     } catch (err: any) {
       console.log(err);
     }
   }
-
-  useEffect(() => {
-    console.log(transactionsArray);
-  }, [transactionsArray]);
 
   useEffect(() => {
     getTransactions();
@@ -76,8 +73,8 @@ export default function Transactions() {
 
   const futureTransactions = transactionsArray.filter(
     (transaction: TransactionProps) => {
-      const dateSplit = transaction.transactionDate.split("/");
-      const newDate = new Date(+dateSplit[2], +dateSplit[1] - 1, +dateSplit[0]);
+      const dateSplit = transaction.transactionDate.split("-");
+      const newDate = new Date(+dateSplit[0], +dateSplit[1] - 1, +dateSplit[2]);
       if (dayjs(newDate).isAfter(dayjs(new Date()))) {
         return transaction;
       }
@@ -118,7 +115,12 @@ export default function Transactions() {
       direction={"column"}
       gap="3em"
     >
-      {modalOpen ? <TransactionModal setModalOpen={setModalOpen} /> : null}
+      {modalOpen ? (
+        <TransactionModal
+          getTransactions={getTransactions}
+          setModalOpen={setModalOpen}
+        />
+      ) : null}
 
       <Flex direction={"column"} gap="2em">
         <Flex
@@ -165,7 +167,7 @@ export default function Transactions() {
                   type="date"
                   onChange={(e: any) => {
                     const dateSplit = e.target.value.split("-");
-                    const dateFormat = `${dateSplit[2]}/${dateSplit[1]}/${dateSplit[0]}`;
+                    const dateFormat = `${dateSplit[0]}-${dateSplit[1]}-${dateSplit[2]}`;
                     setFilterDates(dateFormat);
                   }}
                   value={filterDates}
@@ -234,7 +236,7 @@ export default function Transactions() {
                           if (!futureTransaction) {
                             if (
                               transaction.transactionDate ===
-                              day.format("DD/MM/YYYY")
+                              day.format("YYYY-MM-DD")
                             ) {
                               return (
                                 <TransactionCard

@@ -7,14 +7,18 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { TransactionProps } from "../pages/Transactions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 type ModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  getTransactions: () => {};
 };
 
-export default function TransactionModal({ setModalOpen }: ModalProps) {
+export default function TransactionModal({
+  setModalOpen,
+  getTransactions,
+}: ModalProps) {
   const [transaction, setTransaction] = useState<TransactionProps>({
     name: "",
     transactionDate: "",
@@ -30,6 +34,7 @@ export default function TransactionModal({ setModalOpen }: ModalProps) {
         },
       });
       setModalOpen(false);
+      getTransactions();
     } catch (err: any) {
       console.log(err);
     }
@@ -44,6 +49,7 @@ export default function TransactionModal({ setModalOpen }: ModalProps) {
       top="0"
       left="0"
       position={"fixed"}
+      p={{ base: "0em 2em 0em 2em ", lg: "0" }}
       zIndex={"10"}
     >
       <Flex
@@ -59,7 +65,7 @@ export default function TransactionModal({ setModalOpen }: ModalProps) {
       <Flex
         zIndex={"20"}
         bg="#fff"
-        w="25%"
+        w={{ lg: "40%", xl: "25%" }}
         borderRadius={"2em"}
         alignItems={"center"}
         direction={"column"}
@@ -79,7 +85,12 @@ export default function TransactionModal({ setModalOpen }: ModalProps) {
               }
             />
           </FormControl>
-          <Flex justifyContent={"space-between"} w="100%" gap="1em">
+          <Flex
+            justifyContent={"space-between"}
+            w="100%"
+            gap="1em"
+            flexDir={{ base: "column", xl: "row" }}
+          >
             <FormControl>
               <FormLabel>Valor da Transacão:</FormLabel>
               <Input
@@ -93,12 +104,14 @@ export default function TransactionModal({ setModalOpen }: ModalProps) {
               <FormLabel>Data da Transacão:</FormLabel>
               <Input
                 type="date"
-                onChange={(e) =>
+                onChange={(e) => {
+                  const date = e.target.value.split("-");
+                  const dateFormated = `${date[2]}-${date[1]}-${date[0]}`;
                   setTransaction({
                     ...transaction,
-                    transactionDate: e.target.value,
-                  })
-                }
+                    transactionDate: dateFormated,
+                  });
+                }}
               />
             </FormControl>
           </Flex>

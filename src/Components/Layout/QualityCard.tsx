@@ -20,7 +20,7 @@ export default function QualityCard(props: QualityCardProps) {
           w="100%"
           textAlign={"center"}
           fontSize={"20px"}
-          fontWeight={"light"}
+          fontWeight={"lighter"}
         >
           {props.text}
         </Text>
