@@ -7,7 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { TransactionProps } from "../pages/Transactions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 type ModalProps = {
