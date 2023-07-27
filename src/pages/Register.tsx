@@ -9,9 +9,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Form } from "./Login";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import axios from "axios";
+import { ContentContext } from "../App";
 
 type UserProps = {
   name: string;
@@ -26,7 +27,9 @@ export default function Register() {
     name: "",
     password: "",
   });
-
+  const navigate = useNavigate();
+  const { setNotification, setNotificationMessage } =
+    useContext(ContentContext);
   function handleInputs(e: any) {
     switch (e.target.id) {
       case "name":
@@ -53,12 +56,20 @@ export default function Register() {
 
   async function sendRegister() {
     try {
-      await axios.post("http://localhost:3000/users", userInfo);
+      await axios.post(`http://34.70.57.25:3000/users`, userInfo);
+      setNotificationMessage({
+        message: "Usuário cadastrado com sucesso",
+        status: "success",
+      });
+      setNotification(true);
+      navigate("/login");
     } catch (err: any) {
-      if (err.response.data.message === "User already exists") {
-        console.log("user already exists");
-      }
-      console.log(err);
+      setNotificationMessage({
+        message: err.response.data.message,
+        status: "error",
+      });
+
+      setNotification(true);
     }
   }
 

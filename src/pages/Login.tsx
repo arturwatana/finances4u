@@ -10,7 +10,7 @@ import {
   chakra,
 } from "@chakra-ui/react";
 import { useState, useContext } from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ContentContext } from "../App";
 
@@ -27,8 +27,9 @@ export default function Login() {
     email: "",
     password: "",
   });
-
-  const { setIsLoggedIn } = useContext(ContentContext);
+  const navigate = useNavigate();
+  const { setIsLoggedIn, setNotification, setNotificationMessage } =
+    useContext(ContentContext);
 
   function handleInputs(e: any) {
     switch (e.target.id) {
@@ -50,15 +51,26 @@ export default function Login() {
   async function sendLogin() {
     try {
       const response = await axios.post(
-        "http://localhost:3000/login",
+        `http://34.70.57.25:3000/login`,
         loginInfo
       );
       const token = response.data.access_token;
       localStorage.setItem("token", token);
       setIsLoggedIn(true);
-      return redirect("/transactions");
+      setNotificationMessage({
+        message: "Logado com sucesso",
+        status: "success",
+      });
+      setNotification(true);
+      navigate("/transactions");
     } catch (err: any) {
-      console.log(err);
+      console.log(err.response.data);
+      setNotificationMessage({
+        message: err.response.data.message,
+        status: "error",
+      });
+
+      setNotification(true);
     }
   }
 

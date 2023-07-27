@@ -14,6 +14,8 @@ import SortDates from "../utils/sortDates";
 import { useEffect, useState } from "react";
 import TransactionModal from "../Components/TransactionModal";
 import axios from "axios";
+import { ContentContext } from "../App";
+import { useContext } from "react";
 
 const InfoBox = chakra("div", {
   baseStyle: {
@@ -48,12 +50,14 @@ export default function Transactions() {
   const [transactionsArray, setTransactionsArray] = useState<
     TransactionProps[]
   >([]);
+  const { setNotification, setNotificationMessage } =
+    useContext(ContentContext);
 
   async function getTransactions() {
     const token = localStorage.getItem("token");
     try {
       const transactions = await axios.get(
-        "http://localhost:3000/transactions",
+        "http://34.70.57.25:3000/transactions",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,9 +65,19 @@ export default function Transactions() {
         }
       );
       setTransactionsArray(transactions.data);
+      setNotificationMessage({
+        message: "Suas transacoes foram carregadas com sucesso!",
+        status: "success",
+      });
+      setNotification(true);
       return transactions.data;
     } catch (err: any) {
-      console.log(err);
+      setNotificationMessage({
+        message: err.response.data.message,
+        status: "error",
+      });
+
+      setNotification(true);
     }
   }
 
@@ -197,6 +211,7 @@ export default function Transactions() {
                 {filteredTransactions.map((transaction: TransactionProps) => {
                   return (
                     <TransactionCard
+                      key={transaction.id}
                       name={transaction.name}
                       value={transaction.value}
                       transactionDate={transaction.transactionDate}
@@ -212,6 +227,7 @@ export default function Transactions() {
                 {futureTransactions.map((transaction: TransactionProps) => {
                   return (
                     <TransactionCard
+                      key={transaction.id}
                       name={transaction.name}
                       value={transaction.value}
                       transactionDate={transaction.transactionDate}
@@ -220,7 +236,11 @@ export default function Transactions() {
                 })}
                 {daysWithTransactions.map((day) => (
                   <Flex direction={"column"} gap="1em">
-                    <Text fontSize={"18px"} fontWeight={"semibold"}>
+                    <Text
+                      fontSize={"18px"}
+                      fontWeight={"semibold"}
+                      key={day.format("DD/MM/YYYY")}
+                    >
                       {day.format("DD/MM/YYYY") ===
                       dayjs(new Date()).format("DD/MM/YYYY")
                         ? "Hoje"
@@ -240,6 +260,7 @@ export default function Transactions() {
                             ) {
                               return (
                                 <TransactionCard
+                                  key={transaction.id}
                                   name={transaction.name}
                                   value={transaction.value}
                                   transactionDate={transaction.transactionDate}

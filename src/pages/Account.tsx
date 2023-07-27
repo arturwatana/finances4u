@@ -8,7 +8,8 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ContentContext } from "../App";
 
 type UserProps = {
   name: string;
@@ -17,6 +18,8 @@ type UserProps = {
 };
 
 export default function Account() {
+  const { setNotification, setNotificationMessage } =
+    useContext(ContentContext);
   const [user, setUser] = useState<UserProps>({
     email: "",
     name: "",
@@ -24,14 +27,25 @@ export default function Account() {
   });
 
   async function updateUserInDB() {
-    const token = localStorage.getItem("token");
-    const response = await axios.put("http://localhost:3000/users", user, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    console.log(response);
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(`http://34.70.57.25:3000/users`, user, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setNotificationMessage({
+        message: "Usuário atualizado com sucesso!",
+        status: "success",
+      });
+      setNotification(true);
+    } catch (err: any) {
+      setNotificationMessage({
+        message: err.data.message,
+        status: "error",
+      });
+      setNotification(true);
+    }
   }
 
   return (

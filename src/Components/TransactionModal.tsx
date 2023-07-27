@@ -7,8 +7,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { TransactionProps } from "../pages/Transactions";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
+import { ContentContext } from "../App";
 
 type ModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,19 +25,30 @@ export default function TransactionModal({
     transactionDate: "",
     value: 0,
   });
+  const { setNotification, setNotificationMessage } =
+    useContext(ContentContext);
 
   async function saveTransaction() {
     const token = localStorage.getItem("token");
     try {
-      await axios.post("http://localhost:3000/transactions", transaction, {
+      await axios.post(`http://34.70.57.25:3000/transactions`, transaction, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setModalOpen(false);
       getTransactions();
+      setNotificationMessage({
+        message: "Transacao cadastrada com sucesso",
+        status: "success",
+      });
+      setNotification(true);
     } catch (err: any) {
-      console.log(err);
+      setNotificationMessage({
+        message: err.response.data.message,
+        status: "error",
+      });
+      setNotification(true);
     }
   }
   return (
