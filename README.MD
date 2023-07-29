@@ -17,3 +17,10 @@
 ```shell
     npm run dev
 ```
+
+<br>
+
+![alt text](https://github.com/arturwatana/finances4u/blob/master/src/assets/Finances4u1.png?raw=true)
+<br>
+
+![alt text](https://github.com/arturwatana/finances4u/blob/master/src/assets/finances4u2.png?raw=true)
