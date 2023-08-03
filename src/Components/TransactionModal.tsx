@@ -31,11 +31,15 @@ export default function TransactionModal({
   async function saveTransaction() {
     const token = localStorage.getItem("token");
     try {
-      await axios.post(`http://34.70.57.25:3000/transactions`, transaction, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(
+        `https://finances4u-api-o4n2.onrender.com/transactions`,
+        transaction,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setModalOpen(false);
       getTransactions();
       setNotificationMessage({

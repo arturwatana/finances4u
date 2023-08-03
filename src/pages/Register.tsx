@@ -56,7 +56,10 @@ export default function Register() {
 
   async function sendRegister() {
     try {
-      await axios.post(`http://34.70.57.25:3000/users`, userInfo);
+      await axios.post(
+        `https://finances4u-api-o4n2.onrender.com/users`,
+        userInfo
+      );
       setNotificationMessage({
         message: "Usuário cadastrado com sucesso",
         status: "success",

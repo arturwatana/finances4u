@@ -57,7 +57,7 @@ export default function Transactions() {
     const token = localStorage.getItem("token");
     try {
       const transactions = await axios.get(
-        "http://34.70.57.25:3000/transactions",
+        "https://finances4u-api-o4n2.onrender.com/transactions",
         {
           headers: {
             Authorization: `Bearer ${token}`,

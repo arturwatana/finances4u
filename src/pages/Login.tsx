@@ -51,7 +51,7 @@ export default function Login() {
   async function sendLogin() {
     try {
       const response = await axios.post(
-        `http://34.70.57.25:3000/login`,
+        `https://finances4u-api-o4n2.onrender.com/login`,
         loginInfo
       );
       const token = response.data.access_token;

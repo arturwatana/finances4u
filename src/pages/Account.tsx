@@ -29,7 +29,7 @@ export default function Account() {
   async function updateUserInDB() {
     try {
       const token = localStorage.getItem("token");
-      await axios.put(`http://34.70.57.25:3000/users`, user, {
+      await axios.put(`https://finances4u-api-o4n2.onrender.com/users`, user, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
