@@ -31,6 +31,18 @@ export default function TransactionModal({
   async function saveTransaction() {
     const token = localStorage.getItem("token");
     try {
+      if (
+        !transaction.name ||
+        !transaction.transactionDate ||
+        !transaction.value
+      ) {
+        setNotificationMessage({
+          message: "Ops, está faltando algumas informacoes",
+          status: "error",
+        });
+        setNotification(true);
+        return;
+      }
       await axios.post(
         `https://finances4u-api-o4n2.onrender.com/transactions`,
         transaction,

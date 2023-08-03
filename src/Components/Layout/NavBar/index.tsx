@@ -56,7 +56,7 @@ const BurgerLi = chakra("li", {
 export default function NavBar() {
   const [hoverMenu, setHoverMenu] = useState<boolean>(false);
 
-  const { isLoggedIn } = useContext(ContentContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(ContentContext);
   return (
     <Flex
       justify={"space-between"}
@@ -117,8 +117,18 @@ export default function NavBar() {
                 >
                   <Link to="/transactions">Transacoes</Link>
                 </BurgerLi>
-                <BurgerLi>
+                <BurgerLi
+                  borderBottom={"1px solid #79AC67"}
+                  pb="1em"
+                  w="100%"
+                  textAlign={"center"}
+                >
                   <Link to="/account">Configuracoes</Link>
+                </BurgerLi>
+                <BurgerLi>
+                  <Link to="/" onClick={() => setIsLoggedIn(false)}>
+                    Logout
+                  </Link>
                 </BurgerLi>
               </>
             )}
